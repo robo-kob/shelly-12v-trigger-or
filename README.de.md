@@ -83,6 +83,7 @@ Lies den Aufdruck auf dem Gerät. Beim Shelly 1 Gen4 gilt bei DC-Versorgung:
 
 `I` und `O` sind ein potentialfreier Relaiskontakt (max. 30 V DC). `I` bekommt +12 V, `O` ist der geschaltete Ausgang.
 
+![Shelly an 12 V](images/shelly-12v-power.jpg)
 
 ## Aufbau
 
@@ -100,7 +101,9 @@ Alles bei ausgestecktem Netzteil verkabeln.
 10. **Rückspeisung prüfen:** Shelly an, Receiver aus. Spitze des Receiver-Kabels (vor D2) gegen Masse messen: muss ≈ 0 V sein (gemessen: 0,6 mV).
 11. Alle freiliegenden Stellen isolieren und alles in die Abzweigdose packen.
 
+![Verkabelung vor dem Einbau](images/wiring-overview.jpg)
 
+![Fertig in der Dose](images/enclosure.jpg)
 
 ## Testergebnisse
 

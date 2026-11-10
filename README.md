@@ -83,6 +83,7 @@ Read the label on the device. On the Shelly 1 Gen4 the DC terminals are:
 
 `I` and `O` are a potential-free relay contact (max. 30 V DC). `I` gets +12 V, `O` is the switched output.
 
+![Shelly powered from 12 V](images/shelly-12v-power.jpg)
 
 ## Build steps
 
@@ -100,7 +101,9 @@ Do all wiring with the power supply unplugged.
 10. **Back-feed check:** Shelly on, receiver off. Measure the receiver cable tip (before D2) against ground: it must be ≈ 0 V (measured: 0.6 mV).
 11. Insulate all exposed parts and put everything into the junction box.
 
+![Wiring before enclosure](images/wiring-overview.jpg)
 
+![Finished enclosure](images/enclosure.jpg)
 
 ## Test results
 
