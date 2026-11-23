@@ -129,6 +129,7 @@ Ein Pull-down-Widerstand war nicht nötig: Sperren beide Dioden, hängt der Trig
 - **Taster vs. Trigger (Hypex Nilai Kit):** Wurde die Endstufe mit dem Taster an der Front eingeschaltet, schaltet das Wegnehmen der Trigger-Spannung sie **nicht** aus. Die Endstufe nur über den Trigger schalten.
 - Die Endstufe meldet ihren Zustand nicht an die Hausautomation. Der Shelly-Zustand zeigt nur, ob die Shelly-Seite des Triggers aktiv ist, nicht ob die Endstufe läuft.
 - Nach Stromwiederkehr braucht der Shelly ein paar Sekunden zum Booten und Verbinden (gemessen: ca. 6,4 s). Automationen sollten warten, bis die Schalter-Entity verfügbar ist, bevor sie ihn einschalten.
+- **Kaltstart (Hypex-Nilai-Bausatz):** Ist die Endstufe gerade erst ans Netz gekommen (z. B. über einen Zwischenstecker) und kommt der Trigger erst zusammen mit der Wiedergabe, fehlen die ersten Sekunden der Musik. Deshalb den Trigger *vor* der Wiedergabe setzen: Mit 26–48 s Vorlauf war der Anfang immer da. Der minimal nötige Vorlauf ist nicht gemessen. Hängt die Endstufe schon länger am Netz, reicht der Trigger beim Start der Wiedergabe.
 
 ## Home Assistant
 
@@ -189,6 +190,7 @@ actions:
 Hinweise:
 
 - Der Warteschritt ist nur nötig, wenn das Netzteil des Shelly zusammen mit der HiFi-Anlage geschaltet wird.
+- **Kaltstart:** Das Beispiel setzt den Trigger erst beim Start der Wiedergabe. Hängt die Endstufe am selben Zwischenstecker, den Shelly zusätzlich direkt nach dem Stecker einschalten, also vor der Wiedergabe (siehe „Gut zu wissen“). In meinem Aufbau macht das das Skript, das die HiFi-Anlage hochfährt, in dieser Reihenfolge: Stecker an → warten, bis der Shelly verfügbar ist → Shelly an → warten auf den Streamer → Eingang am Vorverstärker setzen. Die Automation oben bleibt unverändert und deckt die Wiedergabe von jedem Gerät aus ab.
 - `unavailable` und `unknown` sind vom Aus-Trigger ausgenommen, damit ein Streamer, der kurz aus dem Netz fällt, nicht als „spielt nicht“ zählt.
 - **Vorverstärker:** In meinem Aufbau schaltet dieselbe Automation vor dem Shelly noch den Topping Pre90 auf den Streamer-Eingang. Das läuft per IR über einen Broadlink-Sender. Weil der Pre90 seinen Eingang nicht zurückmeldet, merkt sich Home Assistant den zuletzt gesetzten Eingang in einem Helfer (`input_select`) und sendet nur, wenn er abweicht. Das ist gerätespezifisch und deshalb nicht im Beispiel. Bei Fragen dazu gern ein Issue aufmachen.
 
@@ -201,6 +203,7 @@ Hinweise:
 | Danach erneut Wiedergabe | Endstufe wieder an |
 | Receiver eingeschaltet, während der Streamer spielt (eine separate Automation pausiert den Streamer), dann 15 min | Shelly aus, Endstufe bleibt an (Receiver-Trigger), Ton ohne Unterbrechung |
 | Receiver danach ausgeschaltet | Endstufe aus |
+| Kaltstart: Stecker an, Skript schaltet den Shelly ein, Wiedergabe 26–37 s später (3 Durchläufe) | Anfang des Stücks da |
 
 ## Lizenz
 

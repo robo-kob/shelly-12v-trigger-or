@@ -129,6 +129,7 @@ No pull-down resistor was needed: with both diodes blocking, the amplifier's tri
 - **Front button vs. trigger (Hypex Nilai kit):** if the amplifier was switched on with its front button, removing the trigger voltage does **not** switch it off. Only switch the amplifier via the trigger.
 - The amplifier gives no feedback to home automation. The Shelly state shows whether the Shelly side of the trigger is active, not whether the amplifier is on.
 - After power returns the Shelly needs a few seconds to boot and reconnect (measured: about 6.4 s). Automations should wait until the switch entity is available before turning it on.
+- **Cold start (Hypex Nilai kit):** if the amplifier has only just been powered up (e.g. by a smart plug) and the trigger arrives together with playback, the first seconds of music are missing. Set the trigger *before* playback instead: with 26–48 s lead time the beginning was always there. The minimum lead time was not measured. If the amplifier has been on mains for a while, a trigger at playback start is enough.
 
 ## Home Assistant
 
@@ -189,6 +190,7 @@ actions:
 Notes:
 
 - The wait step is only needed if the Shelly's power supply is switched together with the hi-fi gear.
+- **Cold start:** the example sets the trigger only when playback starts. If the amplifier is powered by the same smart plug, also switch the Shelly on right after the plug, before playback (see "Things to know"). In my setup the script that powers up the hi-fi does this in this order: plug on → wait until the Shelly is available → Shelly on → wait for the streamer → set the preamp input. The automation above stays as it is and covers playback started from any device.
 - `unavailable` and `unknown` are excluded from the off trigger so that a streamer that drops off the network does not count as "idle".
 - **Preamp:** in my setup the same automation first switches the Topping Pre90 to the streamer input. This is done via IR from a Broadlink transmitter. Because the Pre90 does not report its input, Home Assistant remembers the last input it set in a helper (`input_select`) and only sends a command when it differs. That part is device-specific and therefore not in the example. Feel free to open an issue if you have questions about it.
 
@@ -201,6 +203,7 @@ Notes:
 | Playback again afterwards | amplifier on again |
 | Receiver switched on while the streamer plays (a separate automation pauses the streamer), then 15 min | Shelly off, amplifier stays on (receiver trigger), sound uninterrupted |
 | Receiver switched off afterwards | amplifier off |
+| Cold start: plug on, script switches the Shelly on, playback 26–37 s later (3 runs) | beginning of the track present |
 
 ## License
 
